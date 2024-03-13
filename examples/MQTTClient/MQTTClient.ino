@@ -39,7 +39,7 @@ void setup(){
 
     fourgee.begin();
     fourgee.connect(apn, gprsUser, gprsPass);
-    Serial.println(fourgee.isGPRSConnected());
+    Serial.println(fourgee.isConnectedToInternet());
 
     mqttClient.setId("clientId7464");
 

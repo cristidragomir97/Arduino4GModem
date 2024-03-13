@@ -3,14 +3,15 @@
 
 #define TINY_GSM_MODEM_BG96
 #define TINY_GSM_RX_BUFFER 1024
-
-// #define TINY_GSM_DEBUG  Serial
-// #define DUMP_AT_COMMANDS
-
 #include <Arduino.h>
 #include <StreamDebugger.h>
 #include <TinyGsmClient.h>
 #include <ArduinoHttpClient.h>
+
+#if defined(ARDUINO_PRO_MODEM_DEBUG)
+#define TINY_GSM_DEBUG  Serial
+#define DUMP_AT_COMMANDS
+#endif 
 
 class Arduino_4G_Modem : public TinyGsmBG96 {
 public:
