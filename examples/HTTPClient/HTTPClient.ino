@@ -1,3 +1,8 @@
+#define TINY_GSM_DEBUG
+#define LOGGING
+#define DEBUGSERIAL Serial
+
+
 #include "ArduinoProModem.h"
 
 const char apn[]      = "live.vodafone.com";
@@ -8,8 +13,10 @@ const char server[]   = "vsh.pp.ua";
 const char resource[] = "/TinyGSM/logo.txt";
 const int  port       = 80;
 
-ArduinoPro_Modem fourgee = ArduinoPro_Modem();
+ArduinoCellularModem fourgee = ArduinoCellularModem();
 HttpClient http = fourgee.getHTTPClient(server, port);
+
+//HttpClient http = HttpClient(&fourgee.getNetworkClient(), server, port);
 
 void setup(){
     Serial.begin(115200);

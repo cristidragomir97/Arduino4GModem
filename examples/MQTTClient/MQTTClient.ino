@@ -15,8 +15,8 @@ const char* topicLed       = "GsmClientTest/led";
 const char* topicInit      = "GsmClientTest/init";
 const char* topicLedStatus = "GsmClientTest/init";
 
-ArduinoPro_Modem fourgee = ArduinoPro_Modem();
-TinyGsmClient client = fourgee.getGSMClient();
+ArduinoCellularModem fourgee = ArduinoCellularModem();
+TinyGsmClient client = fourgee.getNetworkClient();
 MqttClient mqttClient(client);
 
 const char broker[] = "broker.emqx.io";

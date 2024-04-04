@@ -3,7 +3,7 @@
 
 //#define ARDUINO_PRO_MODEM_DEBUG 
 
-ArduinoPro_Modem fourgee = ArduinoPro_Modem();
+ArduinoCellularModem fourgee = ArduinoCellularModem();
 
 float lat = 0.00;
 float lon = 0.00;

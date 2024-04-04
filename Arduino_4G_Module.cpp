@@ -4,6 +4,7 @@
 
 #include <Arduino_4G_Module.h>
 
+
 #if defined(ARDUINO_PORTENTA_C33)
     // P602/P110/P603/P604 -> Serial1
     UART Serial1_FC(UART1_TX_PIN, UART1_RX_PIN, 61, 62);
@@ -17,6 +18,10 @@
 
 // P708 (32) is the ON pin
 #elif defined(ARDUINO_PORTENTA_H7_M7) || defined(CORE_CM4)
+#include "pinDefinitions.h"
+
 Arduino_4G_Modem modem(Serial1, PinNameToIndex(PG_3));
+
+
 // PG3 () is the ON pin
 #endif
