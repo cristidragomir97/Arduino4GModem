@@ -16,8 +16,8 @@ const char gprsUser[] = "live";
 const char gprsPass[] = "";
 
 
-const char server[]   = "store.arduino.cc";
-const char resource[] = "/products/arduino-nano-33-ble";
+const char server[]   = "example.com";
+const char resource[] = "/";
 const int  port       = 443;
 
 ArduinoCellularModem cellularModem = ArduinoCellularModem();
