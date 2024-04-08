@@ -3,7 +3,7 @@
 
 //#define ARDUINO_PRO_MODEM_DEBUG 
 
-ArduinoCellularModem fourgee = ArduinoCellularModem();
+ArduinoCellularModem cellularModem = ArduinoCellularModem();
 
 float lat = 0.00;
 float lon = 0.00;
@@ -15,8 +15,8 @@ const char gprsPass[] = "";
 void setup(){
     Serial.begin(115200);
     while (!Serial);
-    fourgee.begin();
-    //fourgee.connect(apn, gprsUser, gprsPass);
+    cellularModem.begin();
+    //cellularModem.connect(apn, gprsUser, gprsPass);
 }
 
 void loop() {
@@ -30,6 +30,6 @@ void loop() {
     // Null-terminate the string
     incomingData[size] = '\0';
     // Call the sendATCommand function with the read data
-    Serial.println(fourgee.sendATCommand(GF(incomingData)));
+    Serial.println(cellularModem.sendATCommand(GF(incomingData)));
   }
 }

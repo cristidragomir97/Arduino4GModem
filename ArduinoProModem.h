@@ -1,6 +1,10 @@
 #ifndef ARDUINO_PRO_MODEM_H
 #define ARDUINO_PRO_MODEM_H
 
+#if defined(ARDUINO_CELLULAR_DEBUG)
+#define DUMP_AT_COMMANDS
+#endif 
+
 #include <Arduino.h>
 #include <vector>
 #include <Arduino_4G_Module.h>
@@ -183,7 +187,7 @@ class ArduinoCellularModem {
         void getGPSLocation(float* latitude, float* longitude, unsigned long timeout = 60000);
 
 
-        TinyGsmClient * client; /**< The GSM client. */
+        TinyGsmClient client; /**< The GSM client. */
 };
 
 

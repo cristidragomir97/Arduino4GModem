@@ -10,19 +10,19 @@ const char apiKey[]   = "86bba1ae6c7ecf6de0df290fb1d0a795";
 float lat = 51.5074;
 float lon = 0.1278;
 
-ArduinoCellularModem fourgee = ArduinoCellularModem();
+ArduinoCellularModem cellularModem = ArduinoCellularModem();
 //
 
 void setup(){
     Serial.begin(115200);
     while (!Serial);
-    fourgee.begin();
-    fourgee.connect(apn, gprsUser, gprsPass);
+    cellularModem.begin();
+    cellularModem.connect(apn, gprsUser, gprsPass);
 }
 
 
 String httpGETRequest(const char* serverName) {
-  HttpClient http = fourgee.getHTTPClient(serverName, 80);
+  HttpClient http = cellularModem.getHTTPClient(serverName, 80);
   String payload = "";
   
   // Send HTTP POST request

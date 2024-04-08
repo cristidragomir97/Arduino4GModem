@@ -1,28 +1,36 @@
 #include "ArduinoProModem.h"
 
 ArduinoCellularModem::ArduinoCellularModem() {
-    client = new TinyGsmClient(modem);
+    
 }
 
 void ArduinoCellularModem::begin() {
-    Serial.println("Initializing modem...");
+    // set sim slot
     modem.init();
+
+    delay(1000);
+
+ 
     String modemInfo = modem.getModemInfo();
     Serial.print("Modem Info: ");
     Serial.println(modemInfo);
 
     // Set GSM module to text mode
-    //modem.sendAT("+CMGF=1");
+    modem.sendAT("+CMGF=1");
     modem.waitResponse();
 
     // Send intrerupt when SMS has been received
-    //modem.sendAT("AT+CNMI=2,1,0,0,0");
+    modem.sendAT("+CNMI=2,1,0,0,0");
     modem.waitResponse();
+
+
+
+
 }
 
 bool ArduinoCellularModem::connect(const char * apn, const char * gprsUser, const char * gprsPass){
     SimStatus simStatus = getSimStatus();
-    if(simStatus != SimStatus::SIM_ANTITHEFT_LOCKED) {
+    if(simStatus == SimStatus::SIM_LOCKED) {
        unlockSIM("1234");
     }
 
@@ -30,6 +38,8 @@ bool ArduinoCellularModem::connect(const char * apn, const char * gprsUser, cons
     if(simStatus == SimStatus::SIM_READY) {
         if(awaitNetworkRegistration()){
             if(connectToGPRS(apn, gprsUser, gprsPass)){
+                Serial.println("Setting DNS...");
+                Serial.println(this->sendATCommand("+QIDNSCFG=1,\"8.8.8.8\",\"8.8.4.4\""));
                 return true;
             }
         } else {
@@ -86,12 +96,20 @@ void ArduinoCellularModem::getConnectionStatus(){
 }
 
 TinyGsmClient ArduinoCellularModem::getNetworkClient(){
-    return *client;
+    return TinyGsmClient(modem);
 }
 
 HttpClient ArduinoCellularModem::getHTTPClient(const char * server, const int port){
-    return HttpClient(*client, server, port);
+    TinyGsmClient client(modem);
+    return HttpClient(client, server, port);
 }
+
+/*
+HttpClient ArduinoCellularModem::getHTTPSClient(const char * server, const int port){
+
+    BearSSLClient sslClient(TinyGsmClient(modem));
+    return HttpClient(sslClient, server, port);
+}*/
 
 bool ArduinoCellularModem::isConnectedToOperator(){
     return modem.isNetworkConnected();

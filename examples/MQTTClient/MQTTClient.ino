@@ -15,8 +15,8 @@ const char* topicLed       = "GsmClientTest/led";
 const char* topicInit      = "GsmClientTest/init";
 const char* topicLedStatus = "GsmClientTest/init";
 
-ArduinoCellularModem fourgee = ArduinoCellularModem();
-TinyGsmClient client = fourgee.getNetworkClient();
+ArduinoCellularModem cellularModem = ArduinoCellularModem();
+TinyGsmClient client = cellularModem.getNetworkClient();
 MqttClient mqttClient(client);
 
 const char broker[] = "broker.emqx.io";
@@ -37,9 +37,9 @@ void setup(){
     Serial.begin(115200);
     while (!Serial);
 
-    fourgee.begin();
-    fourgee.connect(apn, gprsUser, gprsPass);
-    Serial.println(fourgee.isConnectedToInternet());
+    cellularModem.begin();
+    cellularModem.connect(apn, gprsUser, gprsPass);
+    Serial.println(cellularModem.isConnectedToInternet());
 
     mqttClient.setId("clientId7464");
 

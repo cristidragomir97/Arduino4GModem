@@ -20,7 +20,15 @@
 #elif defined(ARDUINO_PORTENTA_H7_M7) || defined(CORE_CM4)
 #include "pinDefinitions.h"
 
-Arduino_4G_Modem modem(Serial1, PinNameToIndex(PG_3));
+
+// P602/P110/P603/P604 -> Serial1  
+    #ifdef DUMP_AT_COMMANDS
+    StreamDebugger          debugger(Serial1, Serial);
+    __attribute__ ((init_priority (101))) Arduino_4G_Modem modem(debugger, PinNameToIndex(PG_3));
+    #else
+    __attribute__ ((init_priority (101))) Arduino_4G_Modem modem(Serial1, PinNameToIndex(PG_3));
+    #endif
+
 
 
 // PG3 () is the ON pin

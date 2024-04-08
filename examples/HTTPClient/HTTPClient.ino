@@ -1,9 +1,7 @@
-#define TINY_GSM_DEBUG
-#define LOGGING
-#define DEBUGSERIAL Serial
-
+#define ARDUINO_CELLULAR_DEBUG
 
 #include "ArduinoProModem.h"
+
 
 const char apn[]      = "live.vodafone.com";
 const char gprsUser[] = "live";
@@ -13,16 +11,15 @@ const char server[]   = "vsh.pp.ua";
 const char resource[] = "/TinyGSM/logo.txt";
 const int  port       = 80;
 
-ArduinoCellularModem fourgee = ArduinoCellularModem();
-HttpClient http = fourgee.getHTTPClient(server, port);
-
-//HttpClient http = HttpClient(&fourgee.getNetworkClient(), server, port);
+ArduinoCellularModem cellularModem = ArduinoCellularModem();
+TinyGsmClient networkClient = cellularModem.getNetworkClient();
+HttpClient http = HttpClient(networkClient, server, port);
 
 void setup(){
     Serial.begin(115200);
     while (!Serial);
-    fourgee.begin();
-    fourgee.connect(apn, gprsUser, gprsPass);
+    cellularModem.begin();
+    cellularModem.connect(apn, gprsUser, gprsPass);
 }
 
 void loop(){

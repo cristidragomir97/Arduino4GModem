@@ -1,12 +1,12 @@
 #ifndef ARDUINO_4G_MODULE_H
 #define ARDUINO_4G_MODULE_H
 
-#if defined(ARDUINO_PRO_MODEM_DEBUG)
+#if defined(ARDUINO_CELLULAR_DEBUG)
 
-#define DUMP_AT_COMMANDS
 #endif 
 
-#define TINY_GSM_RX_BUFFER 128
+#define DUMP_AT_COMMANDS
+#define TINY_GSM_RX_BUFFER 1024
 #define TINY_GSM_MODEM_BG96
 #define TINY_GSM_DEBUG  Serial
 
@@ -14,7 +14,6 @@
 #include <StreamDebugger.h>
 #include <TinyGsmClient.h>
 #include <ArduinoHttpClient.h>
-
 
 class Arduino_4G_Modem : public TinyGsmBG96 {
 public:

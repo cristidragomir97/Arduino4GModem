@@ -2,7 +2,7 @@
 
 #define ARDUINO_PRO_MODEM_DEBUG 
 
-ArduinoCellularModem fourgee = ArduinoCellularModem();
+ArduinoCellularModem cellularModem = ArduinoCellularModem();
 
 boolean newSMS = false;
 
@@ -14,12 +14,12 @@ void newSMSCallback(){
 void setup(){
     Serial.begin(115200);
     while (!Serial);
-    fourgee.begin();
+    cellularModem.begin();
 
     // 
     attachInterrupt(digitalPinToInterrupt(A0), newSMSCallback, RISING);
 
-    std::vector<SMS> allMessages = fourgee.getReadSMS();
+    std::vector<SMS> allMessages = cellularModem.getReadSMS();
     for(int i = 0; i < allMessages.size(); i++){
         Serial.println("SMS:");
         Serial.print("\t * From: "); Serial.println(allMessages[i].number);
@@ -28,15 +28,15 @@ void setup(){
     }
 
     //delay(1000);
-    //fourgee.sendSMS("+41796530528", "Hello from Arduino Pro Modem!");
+    //cellularModem.sendSMS("+41796530528", "Hello from Arduino Pro Modem!");
     delay(1000);
-    fourgee.sendSMS("+40788494946", "Hello from Arduino Pro Modem!");
+    cellularModem.sendSMS("+40788494946", "Hello from Arduino Pro Modem!");
 }
 
 void loop(){
     if(newSMS){
         newSMS = false;
-        std::vector<SMS> allMessages = fourgee.getUnreadSMS();
+        std::vector<SMS> allMessages = cellularModem.getUnreadSMS();
         if (allMessages.size() > 0){
             for(int i = 0; i < allMessages.size(); i++){
                 Serial.println("SMS:");

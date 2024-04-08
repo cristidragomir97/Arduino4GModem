@@ -4,7 +4,7 @@
 
 
 
-ArduinoCellularModem fourgee = ArduinoCellularModem();
+ArduinoCellularModem cellularModem = ArduinoCellularModem();
 
 float lat = 0.00000;
 float lon = 0.00000;
@@ -23,17 +23,17 @@ const char gprsPass[] = "";
 void setup(){
     Serial.begin(115200);
     while (!Serial);
-    fourgee.begin();
-    //fourgee.connect(apn, gprsUser, gprsPass);
-    fourgee.enableGPS(false);
+    cellularModem.begin();
+    //cellularModem.connect(apn, gprsUser, gprsPass);
+    cellularModem.enableGPS(false);
 }
 
 void loop(){
-    Location loc = fourgee.getGPSLocation(10000);
+    Location loc = cellularModem.getGPSLocation(10000);
     Serial.print("Latitude: "); Serial.println(lat);
     Serial.print("Longitude: "); Serial.println(lon);
 
-    Time t = fourgee.getGPSTime();
+    Time t = cellularModem.getGPSTime();
     Serial.print("ISO String: "); Serial.println(t.getISO8601());
     
     delay(1000);
